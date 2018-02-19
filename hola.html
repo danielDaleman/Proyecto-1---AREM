@@ -1,0 +1,54 @@
+[model:participant, Afiliaciones]
+
+[model:participant, Asesor Comercial, Asesor comercial de Pensiones Colombianas(PC). ]
+
+[model:participant, ContractCenter, Encargados de verificar si se puede afiliar o trasladar al cliente.]
+
+[model:participant, Area de afiliaciones, Encargado de comunicarse con el contratista para la digitalizacion de los datos]
+
+[model:participant, Area lavado de activos, Encargado de realizar la validacion en el sistema AML.]
+
+[model:process, Afiliaciones, Proceso de afiliaciones de Pensiones Colombianas (PC).]
+
+[model:startEvent, Asesor Comercial , Inicio]
+
+[model:userTask, Asesor Comercial , Llamar al contact center, Se contacta al contact center para que le verifiquen en un sistema centralizado denominado SistPen si se puede afiliar o trasladar al cliente.]
+
+[model:userTask, Asesor Comercial , Llenar planilla, Se llema una planilla en copia doble que debe ser firmada por el cliente. Se capturan datos demograficos y la fotocopia de la cedula, se captura la información de fondo de pensiones y cesantias y si tiene pensiones voluntarias.]
+
+[model:userTask, Asesor Comercial , Enviar planilla, Se envia la solicitud completada al area de afiliaciaones.]
+
+[model:exclusiveGateway, Asesor Comercial , ¿Puede ser afiliado?, Se mira que decisión fue tomada, si afliar al cliente o trasladarlo.]
+
+[model:userTask, Asesor Comercial , Trasladar al cliente, Se traslada al cliente de un fondo a otro.]
+
+[model:endEvent, Asesor Comercial , Cliente trasladado, Se termina el proceso.
+]
+
+[model:userTask, ContactCenter, Verificar en sistema SistPen, Verifica en el sistema (SistPen) si se puede afiliar o trasladar.]
+
+[model:boundaryEvent, Más de 3 días, Si la verificacion toma mas de 3 dias entonces se procede a notificar el retardo.]
+
+[model:userTask, ContactCenter, Verificar y validar datos, Se validan los datos de afiliacion y verifica los datos demograficos.
+]
+
+[model:boundaryEvent, Más de 3 días , Si la verificacion toma mas de 3 dias entonces se procede a notificar el retardo.]
+
+[model:exclusiveGateway, ContactCenter, ¿Esta correcto?, Se mira si todo esta correcto o no, cuando no se regresa al asesor comercial para su verificacion y re proceso, de lo contrario continua el proceso.]
+
+[model:userTask, ContactCenter, notificar al gerente comercial, gerente de afiliaciones y jefe de AML, Se notifica al gerente comercial, gerente de afiliaciones y jefe de AML, cuando las verificaciones toman mas de 3 dias en ser realizadas.]
+
+[model:exclusiveGateway, Area lavado de activos, ¿Paso?, De acuerdo a la respuesta del sistema se continua con el proceso o se notifica al asesor comercial y al cliente de que no paso la validacion.]
+
+[model:userTask, Area lavado de activos, Validar en el sistema AML, Se realiza una validacion en el sistema AML.]
+
+[model:userTask, Area lavado de activos, Notificar al asesor comercial y al cliente, Se notifica al asesor comercial y al cliente que la validacion no paso por el sistema AML.]
+
+[model:endEvent, Area lavado de activos, Fin sin afiliacion , Se termina del proceso, sin el cliente afiliado.]
+
+[model:userTask, Area lavado de activos, Crear cuentas de los productros, Se crean las cuentas de los productos en el sistema.]
+
+[model:endEvent, Area lavado de activos, Fin de la afiliación, Se termina correctamente la afiliacion. ]
+
+[model:userTask, Area de afiliaciones, Enviar al contratista, Se envia la solicitud a un contratista para que este la digitalice en un sistema denominado Afiliciaones.]
+
